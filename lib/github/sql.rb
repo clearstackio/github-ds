@@ -243,7 +243,8 @@ module GitHub
           @hash_results = ar_results.to_ary
           @results = ar_results.rows
         else
-          @results = connection.execute(query, "#{self.class.name} Execute").to_a
+          @results = connection.execute(query, "#{self.class.name} Execute")
+          @results = @results.respond_to?(:to_a) ? @results.to_a : [*@results]
         end
 
         @results ||= []
